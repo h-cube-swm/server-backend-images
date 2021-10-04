@@ -9,17 +9,9 @@ const s3 = new aws.S3({
   region: "ap-northeast-2",
 });
 
-const ALLOWED_MIMETYPES = new Set([
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/bmp",
-  "image/gif"
-]);
-
 const checkMimeType = (req, file, cb) => {
   console.log(file.mimetype);
-  if (ALLOWED_MIMETYPES.has(file.mimetype.toLowerCase())) cb(null, true);
+  if (file.mimetype.toLowerCase().includes("image")) cb(null, true);
   else cb(new Error("Invalid file type, only JPEG and PNG is allowed!"), false);
 };
 
