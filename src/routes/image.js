@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", upload.single("image"), async (req, res) => {
   try {
     if (!req.file)
-      return res.status(400).send(gc("'file' field is required."));
+      return res.status(400).send(gc("'image' field is required."));
 
     // db에 insert할 데이터
     const { surveyId } = req.body;

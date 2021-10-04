@@ -12,7 +12,7 @@ const s3 = new aws.S3({
 const checkMimeType = (req, file, cb) => {
   console.log(file.mimetype);
   if (file.mimetype.toLowerCase().includes("image")) cb(null, true);
-  else cb(new Error("Invalid file type, only JPEG and PNG is allowed!"), false);
+  else cb(new Error("Invalid file type, only Image is allowed"), false);
 };
 
 //MULTER-S3 설정
@@ -28,6 +28,7 @@ const upload = multer({
       // ToDo: Consider retrive image extension from magic number. What if image does not have extension? What if image have improper extension?
       cb(null, Date.now() + "." + file.originalname.split(".").pop()); // 이름 설정
     },
+    // limits: { fileSize: maxSize },
   }),
 });
 
