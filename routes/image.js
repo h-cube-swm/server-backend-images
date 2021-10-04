@@ -7,14 +7,15 @@ const router = express.Router();
 
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    // const { surveyId } = req.body;
     if (!req.file)
-      return res.status(400).send(gc("image field를 추가해주세요."));
+      return res.status(400).send(gc("'file' field is required."));
 
+    // db에 insert할 데이터
     const { surveyId } = req.body;
     const userId = req.user.id;
 
-    res.status(200).send(gc("Success"));
+    const imageUrl = req.file.location;
+    res.status(200).send(gr(imageUrl, "Success"));
   } catch (err) {
     console.log("Fail to get image", err);
     res.status(500).send(gc("Server Error"));
