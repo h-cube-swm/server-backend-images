@@ -11,6 +11,9 @@ router.post("/", upload.single("image"), async (req, res) => {
     if (!req.file)
       return res.status(400).send(gc("image field를 추가해주세요."));
 
+    const { surveyId } = req.body;
+    const userId = req.user.id;
+
     res.status(200).send(gc("Success"));
   } catch (err) {
     console.log("Fail to get image", err);
