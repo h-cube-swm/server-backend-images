@@ -3,9 +3,9 @@ kind: Secret
 metadata:
   name: secret-images
 data:
-  - aws_access_key_id_s3=ASDF
-  - aws_secret_access_key_s3=ASDF
-  - stage=ASDF
+  aws_access_key_id_s3: ASDF
+  aws_secret_access_key_s3: ASDF
+  stage: ASDF
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: images
-          image: whoami
+          image: nginx
           env:
             - name: AWS_ACCESS_KEY_ID_S3
               valueFrom:
