@@ -1,6 +1,7 @@
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
+const crypto = require("crypto");
 
 // AWS-S3 설정
 const s3 = new aws.S3({
@@ -20,13 +21,19 @@ const upload = multer({
   fileFilter: checkMimeType,
   storage: multerS3({
     s3,
-    bucket: "the-form-images/surveys",
+    bucket: `the-form-images/surveys/${process.env.STAGE}`,
     acl: "public-read",
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: (req, file, cb) => {
-      // ToDo: Consider using file hash instead of Date.
       // ToDo: Consider retrive image extension from magic number. What if image does not have extension? What if image have improper extension?
-      cb(null, Date.now() + "." + file.originalname.split(".").pop()); // 이름 설정
+      const { sid, qid } = req.body;
+      const userId = req.user.id;
+      const hash = crypto
+        .createHash("md5")
+        .update(userId + sid + qid)
+        .digest("hex");
+
+      cb(null, hash + "." + file.originalname.split(".").pop()); // 이름 설정
     },
     // limits: { fileSize: maxSize },
   }),

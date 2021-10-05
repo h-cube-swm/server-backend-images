@@ -5,13 +5,12 @@ const { getResponse: gr, getComment: gc } = require("../utils/response");
 
 const router = express.Router();
 
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
   try {
-    if (!req.file)
-      return res.status(400).send(gc("'image' field is required."));
+    if (!req.file) return res.status(400).send(gc("'file' field is required."));
 
     // db에 insert할 데이터
-    const { surveyId } = req.body;
+    const { sid, qid } = req.body;
     const userId = req.user.id;
 
     const imageUrl = req.file.location;

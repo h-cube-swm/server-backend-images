@@ -20,6 +20,7 @@ async function checkJWT(req, res, next) {
   } catch (err) {
     console.log("jwt 체크 에러", err);
     res.status(400).send(gc("Only user can upload images"));
+    return;
   }
   next();
 }
