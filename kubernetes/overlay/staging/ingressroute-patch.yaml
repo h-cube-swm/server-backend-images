@@ -1,0 +1,11 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingress-images
+spec:
+  routes:
+    - match: Host(`images.staging.the-form.io`)
+      kind: Rule
+      services:
+        - name: images
+          port: 80
