@@ -22,7 +22,7 @@ router.post("/", upload.single("file"), async (req, res) => {
         "insert into dev(survey_id, user_id, file_link) VALUES(?, ?, ?)",
         [sid, userId, imageUrl]
       );
-      console.log(data);
+      console.log("Successfully insert to database", data);
     } catch (err) {
       console.log("Query Error", err);
     } finally {
