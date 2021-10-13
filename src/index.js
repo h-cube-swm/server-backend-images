@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 
 // Custom modules
-const { getResponse: gr, getComment: gc } = require("./utils/response");
+const { getComment: gc } = require("./utils/response");
 const verify = require("./utils/jwt");
 
 const PORT = 80;
