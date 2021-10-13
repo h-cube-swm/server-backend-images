@@ -3,11 +3,10 @@ const express = require("express");
 const cors = require("cors");
 
 // Custom modules
-const { getResponse: gr, getComment: gc } = require("./utils/response");
+const { getComment: gc } = require("./utils/response");
 const verify = require("./utils/jwt");
 
 const PORT = 80;
-const app = express();
 
 // checkJWT
 async function checkJWT(req, res, next) {
@@ -25,22 +24,33 @@ async function checkJWT(req, res, next) {
   next();
 }
 
-// Global middlewares
-app.use(cors());
-app.use(checkJWT);
+async function main() {
+  const app = express();
 
-app.get("/", (req, res) => {
-  res.status(200).send(gc("Server is running."));
-});
+  // Global middlewares
+  app.use(cors());
+  app.use(checkJWT);
 
-// Routers
-app.use("/images", require("./routes/image"));
+  app.get("/", (req, res) => {
+    res.status(200).send(gc("Server is running."));
+  });
 
-// 404
-app.all("*", (req, res) => {
-  res.status(404).send(gc("Such endpoint does not exists."));
-});
+  // Routers
+  app.use("/images", require("./routes/image"));
 
-app.listen(PORT, () => {
-  console.log(`Server opened at port ${PORT}`);
-});
+  // 404
+  app.all("*", (req, res) => {
+    res.status(404).send(gc("Such endpoint does not exists."));
+  });
+
+  app.listen(PORT, () => {
+    console.log(`Server opened at port ${PORT}`);
+  });
+}
+
+try {
+  main();
+} catch (err) {
+  console.log("Could not start server");
+  console.log("Error :", err);
+}
