@@ -6,6 +6,10 @@ data:
   aws_access_key_id_s3: ASDF
   aws_secret_access_key_s3: ASDF
   stage: ASDF
+  images_db_host: ASDF
+  images_db_user: ASDF
+  images_db_password: ASDF
+  images_db: ASDF
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -40,6 +44,26 @@ spec:
                 secretKeyRef:
                   name: secret-images
                   key: stage
+            - name: IMAGES_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret-images
+                  key: images_db_host
+            - name: IMAGES_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret-images
+                  key: images_db_user
+            - name: IMAGES_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret-images
+                  key: images_db_password
+            - name: IMAGES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: secret-images
+                  key: images_db
           ports:
             - containerPort: 80
 ---
