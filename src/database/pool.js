@@ -7,4 +7,15 @@ const pool = mysql.createPool({
   database: process.env.IMAGES_DB,
 });
 
+const dbTest = async () => {
+  try {
+    await pool.getConnection(async (conn) => conn);
+    console.log("Successfully connected to mysql");
+  } catch (err) {
+    console.log("DB Error", err);
+  }
+};
+
+dbTest();
+
 module.exports = pool;
