@@ -6,6 +6,5 @@ const pool = mysql.createPool({
   password: process.env.IMAGES_DB_PASSWORD,
   database: process.env.IMAGES_DB,
 });
-console.log("Successfully connected to mysql");
 
 module.exports = pool;

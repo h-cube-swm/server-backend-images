@@ -18,17 +18,22 @@ router.post("/", upload.single("file"), async (req, res) => {
     const imageUrl = req.file.location;
 
     // db insert
-    const connection = await pool.getConnection(async (conn) => conn);
     try {
-      const data = await connection.query(
-        `insert into ${table}(survey_id, user_id, file_link) VALUES(?, ?, ?)`,
-        [sid, userId, imageUrl]
-      );
-      console.log("Successfully insert to database", data);
+      const connection = await pool.getConnection(async (conn) => conn);
+      console.log("Successfully connected to mysql");
+      try {
+        const data = await connection.query(
+          `insert into ${table}(survey_id, user_id, file_link) VALUES(?, ?, ?)`,
+          [sid, userId, imageUrl]
+        );
+        console.log("Successfully insert to database", data);
+      } catch (err) {
+        console.log("Query Error", err);
+      } finally {
+        connection.release();
+      }
     } catch (err) {
-      console.log("Query Error", err);
-    } finally {
-      connection.release();
+      console.log("DB connection error", err);
     }
 
     res.status(200).send(gr(imageUrl, "Success"));
