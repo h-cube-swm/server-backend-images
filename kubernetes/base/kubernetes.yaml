@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: images
-          image: nginx
+          image: 162623214680.dkr.ecr.ap-northeast-2.amazonaws.com/server-backend-images:latest
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
