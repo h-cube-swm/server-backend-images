@@ -5,6 +5,8 @@ const upload = require("../utils/upload");
 const { getResponse: gr, getComment: gc } = require("../utils/response");
 
 const router = express.Router();
+// for database table
+const table = process.env.STAGE === "dev" ? "dev" : "prod";
 
 router.post("/", upload.single("file"), async (req, res) => {
   try {
@@ -19,7 +21,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     const connection = await pool.getConnection(async (conn) => conn);
     try {
       const data = await connection.query(
-        "insert into dev(survey_id, user_id, file_link) VALUES(?, ?, ?)",
+        `insert into ${table}(survey_id, user_id, file_link) VALUES(?, ?, ?)`,
         [sid, userId, imageUrl]
       );
       console.log("Successfully insert to database", data);
