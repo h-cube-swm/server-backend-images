@@ -1,4 +1,5 @@
 docker.sh
+*.secret
 
 ### Node ###
 # Logs
