@@ -9,3 +9,10 @@ spec:
       services:
         - name: images
           port: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: images
+spec:
+  replicas: 1
