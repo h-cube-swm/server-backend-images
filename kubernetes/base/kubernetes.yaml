@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: images
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: images
@@ -60,6 +60,9 @@ spec:
 
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: ap-northeast-2-ecr-registry
+
 ---
 apiVersion: v1
 kind: Service
