@@ -1,12 +1,10 @@
 const express = require("express");
-const pool = require("../database/pool");
+const { pool, table } = require("../database/pool");
 
 const upload = require("../utils/upload");
 const { getResponse: gr, getComment: gc } = require("../utils/response");
 
 const router = express.Router();
-// for database table
-const table = process.env.STAGE === "dev" ? "dev" : "prod";
 
 router.post("/", upload.single("file"), async (req, res) => {
   try {

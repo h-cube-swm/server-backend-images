@@ -7,15 +7,32 @@ const pool = mysql.createPool({
   database: process.env.IMAGES_DB,
 });
 
+// for database table
+const table = process.env.STAGE === "dev" ? "dev" : "prod";
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 const dbTest = async () => {
-  try {
-    await pool.getConnection(async (conn) => conn);
-    console.log("Successfully connected to mysql");
-  } catch (err) {
-    console.log("DB Error", err);
+  let connection;
+  while (true) {
+    try {
+      connection = await pool.getConnection(async (conn) => conn);
+      console.log("Successfully connected to mysql");
+      break;
+    } catch (err) {
+      console.log("DB Error", err);
+    }
+    await sleep(100);
   }
+  await connection.query(`create table if not exists ${table} (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    survey_id TEXT NOT NULL,
+    user_id TEXT NOT NULL,
+    file_link TEXT NOT NULL
+  )`);
+  connection.release();
 };
 
 dbTest();
 
-module.exports = pool;
+module.exports = { pool, table };

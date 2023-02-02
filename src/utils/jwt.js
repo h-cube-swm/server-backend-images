@@ -7,7 +7,7 @@ let verifier = null;
 
 let timeout = true;
 async function updateKeyStore() {
-  if (!timeout) return;
+  if (!timeout && verifier) return;
   timeout = false;
   setTimeout(() => {
     timeout = true;

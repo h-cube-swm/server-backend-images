@@ -13,8 +13,11 @@ async function checkJWT(req, res, next) {
   req.user = {};
   try {
     const token = req.headers.authorization.split("Bearer ")[1];
+    console.log({ token });
     const verified = await verify(token);
+    console.log({ verified });
     const payload = JSON.parse(verified.payload.toString());
+    console.log({ payload });
     req.user = payload;
   } catch (err) {
     console.log("jwt 체크 에러", err);
