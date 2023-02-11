@@ -70,7 +70,7 @@ API gateway에서 요청을 받고 해당 요청을 Lambda로 연동 및 RDS Mys
   그리고 node.js의 경우 context.callbackWaitsForEmptyEventLoop = false로 설정해주는 방법도 있다.  
   하지만 이에 대해서도 학습이 필요하고 개인의 기술적 성장과 비교했을 때 손실이 더 크다.
 
-3. 쌩 node.js의 어려움
+3. node.js의 어려움
 
 - Lambda에서는 공식적으로 node.js를 지원하는데, 요청에 대한 return을 처리하는 것에 대해 기존에 사용하던 express 대비 공수가 더 들어간다.  
   예를들면 최근에는 3시간 이상 OPTIONS 메소드의 처리를 못해줌으로써 프론트엔드 요청 테스트에 지연이 생긴 경험이 있다.  
